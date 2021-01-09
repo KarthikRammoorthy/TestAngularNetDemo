@@ -1,3 +1,4 @@
+import { TableComponent } from './table/table.component';
 import { ResponseComponent } from './response/response.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { ShellComponent } from './shell/shell.component';
@@ -7,12 +8,12 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    component: ShellComponent,
+    component: TableComponent,
     pathMatch: 'full',
     data: {
-      id: 'shell',
-      label: 'Shell',
-      breadcrumb: 'Home'
+      id: 'table',
+      label: 'table',
+      breadcrumb: 'Table'
     }
   },
   {

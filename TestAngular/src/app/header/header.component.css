@@ -6,3 +6,7 @@
 .header-background {
   background-color: black;
 }
+
+.mat-button.mat-primary {
+  color: white !important;
+}

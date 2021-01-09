@@ -1,14 +1,15 @@
 <div class="body-container" fxLayout="column nowrap" fxLayoutAlign= "stretch stretch">
   <!-- Palindromes -->
-<!--   <div fxFlex>
-    <mat-label id="palindromesLabel"> Palindromes </mat-label>
-    <mat-list role="list">
-      <mat-list-item role="listitem" *ngRepeat="let palindrome in palindromes"> {{palindrome}} </mat-list-item>
+  <div fxLayout="column nowrap" fxLayoutAlign= "stretch stretch">
+    <mat-label id="palindromesLabel" fxFlex class="font-style"> Palindromes </mat-label>
+    <mat-list role="list" fxLayout="column nowrap" fxLayoutAlign= "stretch stretch">
+      <mat-list-item  mat-raised-button role="listitem" *ngFor="let palindrome of palindromes?.palindromes" fxFlex> {{palindrome}} </mat-list-item>
     </mat-list>
-    </div> -->
+    </div>
 
   <!-- count -->
   <div fxFlex>
-    <mat-label id="countlabel"> {{palindromes?.count}}</mat-label>
+    <mat-label id="palindromesLabel" fxFlex class="font-style"> Count </mat-label>
+    <mat-label id="countlabel" fxFlex> {{palindromes?.count}}</mat-label>
   </div>
 </div>
