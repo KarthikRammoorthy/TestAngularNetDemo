@@ -4,5 +4,7 @@ namespace testapi.Models
     {
         public string[] Palindromes { get; set; }
         public int Count { get; set; }
+
+        public int ReverseCount { get; set; }
     }
 }

@@ -2,6 +2,8 @@ using testapi.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Collections;
+using System;
 
 namespace testapi.Service
 {
@@ -16,8 +18,12 @@ namespace testapi.Service
 
             var messageWithoutSpaces = Regex.Replace(queryItem.Message, @"\s+", "");
             var quesrywithOutSpaces = Regex.Replace(queryItem.Query, @"\s+", "");
-
             response.Count = Regex.Matches(messageWithoutSpaces, quesrywithOutSpaces).Count;
+
+            char[] queryArrays = quesrywithOutSpaces.ToCharArray();
+            Array.Reverse(queryArrays);
+            var queryInReverse = new string(queryArrays);
+            response.ReverseCount = Regex.Matches(messageWithoutSpaces, queryInReverse).Count;
 
             return response;
 
