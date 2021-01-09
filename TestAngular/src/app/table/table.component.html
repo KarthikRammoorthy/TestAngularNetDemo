@@ -1,0 +1,26 @@
+<div class="body-container">
+  <form [formGroup]="myForm" (ngSubmit)="submitForm()" fxLayout="column nowrap" fxLayoutAlign= "stretch stretch" novalidate>
+  <!-- Query -->
+  <mat-form-field fxFlex>
+    <mat-label id="queryLabel"> Query </mat-label>
+    <input matInput aria-labelledby="queryLabel" formControlName="query">
+    <mat-error *ngIf="myForm.controls.query.errors && myForm.controls.query.hasError('required')">
+      You must provide a <strong>query</strong>
+   </mat-error>
+  </mat-form-field>
+
+  <!-- Message -->
+  <mat-form-field fxFlex>
+    <mat-label id="messageLabel"> Message </mat-label>
+    <textarea matInput aria-labelledby="messageLabel" formControlName="message" rows="5"></textarea>
+    <mat-error *ngIf="myForm.controls.message.errors && myForm.controls.message.hasError('required')">
+      You must provide a <strong>message</strong>
+   </mat-error>
+  </mat-form-field>
+
+  <div style="align-self: flex-end;">
+    <button aria-placeholder="Submit" mat-flat-button color="primary" [disabled]="!myForm.valid">Submit</button>
+  </div>
+
+  </form>
+</div>
