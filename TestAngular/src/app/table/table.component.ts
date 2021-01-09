@@ -3,6 +3,9 @@ import { ConfigService } from './../config/config.service';
 import { Component, ErrorHandler, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { state } from '@angular/animations';
+import { Palindromes } from './../config/palindromes.model';
 
 @Component({
   selector: 'app-table',
@@ -16,7 +19,7 @@ export class TableComponent implements OnInit {
   query = new FormControl();
   errors: any = {};
 
-  constructor(private fb: FormBuilder, public httpClient: HttpClient, private erroHandler : ErrorHandler, private configService: ConfigService) {
+  constructor(private fb: FormBuilder, public httpClient: HttpClient, private erroHandler : ErrorHandler, private configService: ConfigService, private router: Router) {
 
   }
 
@@ -37,11 +40,11 @@ export class TableComponent implements OnInit {
       query: this.myForm.controls.query.value,
       message: this.myForm.controls.message.value
     };
-    let response : Response | undefined;
 
     this.configService.sendPostRequest(request).subscribe(
-      response => response = response
-    );
+      palindromes => {
+        this.router.navigate(['response'], { state: { palindromes: palindromes} });
+    });
 
 
   }

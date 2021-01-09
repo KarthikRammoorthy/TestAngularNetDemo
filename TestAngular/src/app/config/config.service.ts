@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Query } from './query.model';
 import { Observable } from 'rxjs';
+import { Palindromes } from './palindromes.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,8 @@ export class ConfigService {
   configUrl = 'http://localhost:5000/api/Query';
 
 
-  sendPostRequest(request: Query): Observable<Response> {
-    return this.http.post<Response>(this.configUrl, request, this.requestOptions);
+  sendPostRequest(request: Query): Observable<Palindromes> {
+    return this.http.post<Palindromes>(this.configUrl, request, this.requestOptions);
   }
 
 }
