@@ -1,6 +1,7 @@
 using testapi.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace testapi.Service
 {
@@ -12,7 +13,11 @@ namespace testapi.Service
             var palindromes = GetPalindromes(message);
             var response = new Response();
             response.Palindromes = palindromes.ToArray();
-            response.Count = palindromes.Count;
+
+            var messageWithoutSpaces = Regex.Replace(queryItem.Message, @"\s+", "");
+            var quesrywithOutSpaces = Regex.Replace(queryItem.Query, @"\s+", "");
+
+            response.Count = Regex.Matches(messageWithoutSpaces, quesrywithOutSpaces).Count;
 
             return response;
 
