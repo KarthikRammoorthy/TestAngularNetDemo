@@ -15,15 +15,25 @@ namespace testapi.Service
             var palindromes = GetPalindromes(message);
             var response = new Response();
             response.Palindromes = palindromes.ToArray();
+            response.PalindromeCount = palindromes.Count;
 
-            var messageWithoutSpaces = Regex.Replace(queryItem.Message, @"\s+", "");
+            /*          var messageWithoutSpaces = Regex.Replace(queryItem.Message, @"\s+", "");
+                     var messageRemoveSpecialCharacters = Regex.Replace(messageWithoutSpaces, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled);
+                     var quesrywithOutSpaces = Regex.Replace(queryItem.Query, @"\s+", "");
+                     var queryRemoveSpecialCharacters = Regex.Replace(messageWithoutSpaces, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled);
+                     response.Count = Regex.Matches(messageRemoveSpecialCharacters, queryRemoveSpecialCharacters).Count; */
+
+            var messageList = queryItem.Message.Split(',').Select(message => Regex.Replace(message, @"\s+", "")).ToList<string>();
             var quesrywithOutSpaces = Regex.Replace(queryItem.Query, @"\s+", "");
-            response.Count = Regex.Matches(messageWithoutSpaces, quesrywithOutSpaces).Count;
+            response.Count = messageList.Count(message => message.ToLower().Contains(quesrywithOutSpaces.ToLower()));
+
 
             char[] queryArrays = quesrywithOutSpaces.ToCharArray();
             Array.Reverse(queryArrays);
             var queryInReverse = new string(queryArrays);
-            response.ReverseCount = Regex.Matches(messageWithoutSpaces, queryInReverse).Count;
+            response.ReverseCount = messageList.Count(message => message.ToLower().Contains(queryInReverse.ToLower()));
+
+            //response.ReverseCount = Regex.Matches(messageRemoveSpecialCharacters, queryInReverse).Count;
 
             return response;
 
