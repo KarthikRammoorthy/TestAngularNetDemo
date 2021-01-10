@@ -12,10 +12,12 @@ namespace testapi.Service
         public Response QueryProcessing(QueryRequest queryItem)
         {
             var message = queryItem.Message;
-            var palindromes = GetPalindromes(message);
+            var messageList = queryItem.Message.Split(',').Select(message => Regex.Replace(message, @"\s+", "")).ToList<string>();
+
+            var palindromeList = GetPalindromes(messageList);
             var response = new Response();
-            response.Palindromes = palindromes.ToArray();
-            response.PalindromeCount = palindromes.Count;
+            response.Palindromes = palindromeList.ToArray();
+            response.PalindromeCount = palindromeList.Count;
 
             /*          var messageWithoutSpaces = Regex.Replace(queryItem.Message, @"\s+", "");
                      var messageRemoveSpecialCharacters = Regex.Replace(messageWithoutSpaces, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled);
@@ -23,7 +25,6 @@ namespace testapi.Service
                      var queryRemoveSpecialCharacters = Regex.Replace(messageWithoutSpaces, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled);
                      response.Count = Regex.Matches(messageRemoveSpecialCharacters, queryRemoveSpecialCharacters).Count; */
 
-            var messageList = queryItem.Message.Split(',').Select(message => Regex.Replace(message, @"\s+", "")).ToList<string>();
             var quesrywithOutSpaces = Regex.Replace(queryItem.Query, @"\s+", "");
             response.Count = messageList.Count(message => message.ToLower().Contains(quesrywithOutSpaces.ToLower()));
 
@@ -39,35 +40,19 @@ namespace testapi.Service
 
         }
 
-        private static List<string> GetPalindromes(string source)
+        public static List<string> GetPalindromes(List<string> messageList)
         {
-            try
+            var palindromeList = new List<string>();
+
+            messageList.ForEach(message =>
             {
-                List<string> subsets = new List<string>();
-                for (int i = 0; i < source.Length - 1; i++)
+                if (message.SequenceEqual(message.Reverse()))
                 {
-                    for (int j = i + 1; j <= source.Length; j++)
-                    {
-                        if (j - i > 1 && source[j - 1] == source[i])
-                        {
-                            string currentSubset = source.Substring(i, j - i);
-                            if (IsPalindrome(currentSubset))
-                            {
-                                subsets.Add(currentSubset);
-                            }
-                        }
-                    }
+                    palindromeList.Add(message);
+
                 }
-                return subsets;
-            }
-            catch (System.Exception)
-            {
-
-                throw;
-            }
-
+            });
+            return palindromeList;
         }
-
-        private static bool IsPalindrome(string input) => !input.Where((t, i) => t != input[input.Length - 1 - i]).Any();
     }
 }
